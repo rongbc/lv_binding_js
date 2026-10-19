@@ -4,11 +4,15 @@ project(lvgljs LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(LV_CONF_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lv_conf.h CACHE INTERNAL "LV_CONF_PATH")
+set(LV_BUILD_CONF_PATH ${LV_CONF_PATH} CACHE PATH "LVGL v9 build configuration")
 
 set(BUILD_NATIVE OFF CACHE BOOL "Build wasm3 with native support")
 set(BUILD_LVGL_SIMULATOR OFF CACHE BOOL "Build as lvgl simulator")
 
 find_path(LVGL_PATH lvgl.h PATHS ${CMAKE_CURRENT_SOURCE_DIR}/deps PATH_SUFFIXES lvgl)
+if(NOT LVGL_PATH)
+    message(FATAL_ERROR "deps/lvgl not found; run: git submodule update --init deps/lvgl")
+endif()
 
 if (MSVC)
     set(CMAKE_CXX_STANDARD 23)
@@ -120,6 +124,7 @@ endif()
 
 target_include_directories(lvgljs PUBLIC
     ${LVGL_PATH}
+    ${LVGL_PATH}/src
     src/
     src/engine
     src/engine/hal

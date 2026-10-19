@@ -1,6 +1,6 @@
 #include "./png.hpp"
 
-#include "src/draw/lv_image_decoder_private.h"
+#include "image/lv_image_decoder_private.h"
 
 bool ispng (uint16_t* buf) {
     uint16_t GIF[4] = {0x5089, 0x474E, 0x0A0D, 0x0A1A};

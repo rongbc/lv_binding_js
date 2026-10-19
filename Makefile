@@ -3,7 +3,9 @@ BUILD_SIM=build
 .PHONY: setup simulator demo clean
 
 setup:
-	git submodule update --recursive --init
+	git submodule update --init --recursive deps/txiki
+	@test -f deps/lvgl/lvgl.h || git clone --depth 1 -b v9.6.0 https://github.com/lvgl/lvgl.git deps/lvgl
+	@git -C deps/lvgl checkout -f v9.6.0
 	npm install
 
 simulator:
